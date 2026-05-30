@@ -1,0 +1,54 @@
+:root {
+  /* Toss palette */
+  --blue-50: #E8F3FF;
+  --blue-100: #C9E2FF;
+  --blue-300: #6BA9FA;
+  --blue-500: #3182F6;
+  --blue-600: #1B64DA;
+
+  --gray-900: #191F28;
+  --gray-800: #333D4B;
+  --gray-700: #4E5968;
+  --gray-500: #8B95A1;
+  --gray-400: #B0B8C1;
+  --gray-300: #D1D6DB;
+  --gray-200: #E5E8EB;
+  --gray-100: #F2F4F6;
+  --gray-50: #F9FAFB;
+  --white: #FFFFFF;
+
+  --success: #2BC47D;
+  --warning: #F59A23;
+
+  /* Radius */
+  --radius-button: 12px;
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Typography */
+  --font-h1: 700 28px/1.35 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-h2: 700 22px/1.4 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-h3: 600 18px/1.45 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body: 400 16px/1.55 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-body-bold: 600 16px/1.55 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-caption: 400 14px/1.5 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-small: 400 12px/1.5 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* Shadow */
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-floating: 0 6px 24px rgba(0, 0, 0, 0.08);
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

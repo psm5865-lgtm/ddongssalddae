@@ -1,0 +1,113 @@
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-top: var(--space-12);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.eyebrow {
+  font: var(--font-caption);
+  color: var(--blue-500);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.title {
+  font: var(--font-h1);
+  font-size: 30px;
+  color: var(--gray-900);
+  letter-spacing: -0.01em;
+}
+
+.sub {
+  font: var(--font-body);
+  color: var(--gray-700);
+  margin-top: var(--space-2);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionLabel {
+  font: var(--font-body-bold);
+  color: var(--gray-900);
+}
+
+.sectionHint {
+  font: var(--font-caption);
+  color: var(--gray-500);
+}
+
+.input {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-card);
+  padding: var(--space-4) var(--space-5);
+  font: var(--font-body);
+  transition: border-color 150ms var(--ease), background-color 150ms var(--ease);
+}
+
+.input:focus-within {
+  border-color: var(--blue-500);
+  background: var(--white);
+}
+
+.input input {
+  width: 100%;
+}
+
+.timeRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.timeChip {
+  height: 64px;
+  border-radius: var(--radius-card);
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font: var(--font-body-bold);
+  color: var(--gray-700);
+  cursor: pointer;
+  transition: border-color 150ms var(--ease), background-color 150ms var(--ease), color 150ms var(--ease);
+}
+
+.timeChip__min {
+  font-size: 18px;
+}
+
+.timeChip__hint {
+  font: var(--font-small);
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.timeChip.active {
+  background: var(--blue-50);
+  border-color: var(--blue-500);
+  color: var(--blue-600);
+}
+
+.timeChip.active .timeChip__hint {
+  color: var(--blue-500);
+}
+
+.footer {
+  padding-top: var(--space-4);
+}

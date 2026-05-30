@@ -1,0 +1,43 @@
+.btn {
+  width: 100%;
+  height: 56px;
+  border-radius: var(--radius-button);
+  font: var(--font-body-bold);
+  font-size: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition: background-color 120ms var(--ease), transform 120ms var(--ease);
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.985);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--blue-500);
+  color: var(--white);
+}
+.primary:not(:disabled):active {
+  background: var(--blue-600);
+}
+
+.secondary {
+  background: var(--gray-100);
+  color: var(--gray-900);
+}
+.secondary:not(:disabled):active {
+  background: var(--gray-200);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--gray-500);
+}

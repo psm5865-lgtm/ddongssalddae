@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -sS -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:53032/)",
+      "Bash(lsof -nP -iTCP:53032 -sTCP:LISTEN)",
+      "Bash(lsof -nP -iTCP -sTCP:LISTEN)",
+      "Bash(curl -sS http://localhost:5173/)",
+      "Bash(curl -sS http://localhost:5174/)",
+      "Bash(pkill -f \"ddongssalddae/node_modules/.bin/vite\")",
+      "Bash(PORT=53703 npm --prefix /Users/samuel.21/Documents/ddongssalddae run dev)",
+      "Read(//tmp/**)",
+      "Bash(PORT=53703 node ./node_modules/.bin/vite)",
+      "Bash(PORT=53703 node -e \"console.log\\('PORT seen by node:', process.env.PORT\\)\")",
+      "Bash(PORT=53703 node -e \"console.log\\('hex dump of vite.config.ts first line:'\\); const fs=require\\('fs'\\); console.log\\(fs.readFileSync\\('./vite.config.ts','utf8'\\).slice\\(0,200\\)\\);\")",
+      "Bash(PORT=53703 node --input-type=module -e ' *)",
+      "Bash(pkill -f \"ddongssalddae/node_modules/.bin/vite\" 2>&1; sleep 1 *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git -c user.name=ddongssalddae -c user.email=noreply@example.com commit -q -m ' *)"
+    ]
+  }
+}

@@ -93,6 +93,7 @@ function encodePNG(rgba, w, h) {
 const outDir = path.join(__dirname);
 const sizes = [
   { size: 1024, ss: 3 },
+  { size: 600, ss: 3 },
   { size: 512, ss: 4 },
   { size: 192, ss: 4 },
   { size: 180, ss: 4 },

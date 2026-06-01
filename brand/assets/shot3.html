@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:636px;height:1048px;overflow:hidden}
+  body{font-family:-apple-system,'Apple SD Gothic Neo','Pretendard',sans-serif}
+  .wrap{width:636px;height:1048px;background:linear-gradient(160deg,#E8F1FF,#F7FAFF);display:flex;flex-direction:column}
+  .cap{padding:62px 52px 22px}
+  .cap h2{font-size:47px;font-weight:800;color:#191F28;letter-spacing:-1.5px;line-height:1.25}
+  .cap p{font-size:25px;color:#4E5968;margin-top:16px;font-weight:500}
+  .screen{flex:1;margin:16px 44px 54px;background:#fff;border-radius:44px;box-shadow:0 30px 70px rgba(30,60,120,.16);
+    padding:48px 40px;display:flex;flex-direction:column;color:#191F28}
+  .card{background:#fff;border:1px solid #F2F4F6;border-radius:28px;box-shadow:0 6px 20px rgba(0,0,0,.05);padding:38px 32px}
+  .ct{display:flex;justify-content:space-between;align-items:baseline;font-size:27px;font-weight:700}
+  .ct .cnt{font-size:22px;color:#8B95A1;font-weight:600}
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-top:30px}
+  .cell{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .d{font-size:20px;color:#8B95A1;font-weight:600}
+  .d.today{color:#3182F6;font-weight:800}
+  .st{width:52px;height:52px;border-radius:50%;background:#F2F4F6;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:transparent}
+  .st.on{background:#3182F6;color:#fff}
+  .st.tod{outline:3px solid #3182F6;outline-offset:3px}
+  .note{margin-top:46px;text-align:center;font-size:26px;color:#4E5968;font-weight:500}
+  .note b{color:#191F28;font-weight:800}
+  .spacer{flex:1}
+</style></head>
+<body>
+  <div class="wrap">
+    <div class="cap"><h2>잘한 날엔<br>도장 하나</h2><p>점수도 알림도 없이, 조용하게.</p></div>
+    <div class="screen">
+      <div class="card">
+        <div class="ct"><span>이번 주 마음챙김</span><span class="cnt">4/7</span></div>
+        <div class="week">
+          <div class="cell"><span class="d">월</span><div class="st on">✓</div></div>
+          <div class="cell"><span class="d">화</span><div class="st on">✓</div></div>
+          <div class="cell"><span class="d">수</span><div class="st">✓</div></div>
+          <div class="cell"><span class="d">목</span><div class="st on">✓</div></div>
+          <div class="cell"><span class="d">금</span><div class="st">✓</div></div>
+          <div class="cell"><span class="d today">토</span><div class="st on tod">✓</div></div>
+          <div class="cell"><span class="d">일</span><div class="st">✓</div></div>
+        </div>
+      </div>
+      <div class="note"><b>오늘까지 12번</b>의 마음챙김</div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+</body></html>

@@ -26,7 +26,11 @@
       "Bash(git remote *)",
       "Bash(git push *)",
       "Bash(echo \"exit: $?\")",
-      "Bash(git ls-remote *)"
+      "Bash(git ls-remote *)",
+      "Bash(git ls-tree *)",
+      "Bash(git fetch *)",
+      "Bash(curl -sS -o /dev/null -w 'HTTP %{http_code}\\\\n' https://ddongssalddae.vercel.app/)",
+      "Bash(curl -sS https://ddongssalddae.vercel.app/)"
     ]
   }
 }

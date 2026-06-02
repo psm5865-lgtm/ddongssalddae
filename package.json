@@ -7,11 +7,14 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "dev": "granite dev",
+    "dev:vite": "vite --port 5190 --strictPort",
+    "build": "ait build",
+    "preview": "vite preview",
+    "deploy": "ait deploy"
   },
   "dependencies": {
+    "@apps-in-toss/web-framework": "^2.6.1",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^11.3.19",
     "react": "^18.3.1",

@@ -2,22 +2,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-6);
-  padding: var(--space-8) var(--space-2);
   text-align: center;
+  padding: var(--space-8) var(--space-2) 0;
+  gap: var(--space-4);
 }
 
+/* 곡선형 따옴표(“)를 세리프로 — 직선 따옴표가 일시정지처럼 보이던 문제 해결 */
 .mark {
-  font: var(--font-h1);
-  color: var(--blue-100);
-  font-size: 56px;
-  line-height: 1;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--blue-300);
+  font-size: 76px;
+  line-height: 0.5;
+  height: 36px;
 }
 
 .quote {
   font: var(--font-h2);
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.55;
   color: var(--gray-900);
   letter-spacing: -0.01em;
@@ -26,4 +27,30 @@
 .hint {
   font: var(--font-caption);
   color: var(--gray-500);
+}
+
+.fieldWrap {
+  width: 100%;
+  margin-top: var(--space-4);
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-card);
+  padding: var(--space-4) var(--space-5);
+  transition: border-color 150ms var(--ease), background-color 150ms var(--ease);
+}
+
+.fieldWrap:focus-within {
+  border-color: var(--blue-500);
+  background: var(--white);
+}
+
+.field {
+  width: 100%;
+  font: var(--font-body);
+  color: var(--gray-900);
+  text-align: center;
+}
+
+.field::placeholder {
+  color: var(--gray-400);
 }

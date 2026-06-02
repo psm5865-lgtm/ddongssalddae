@@ -13,6 +13,8 @@ export function Complete() {
   const weekCount = thisWeekCount(records);
   const total = records.length;
   const name = nicknameOrFallback(settings.nickname);
+  const lastNote =
+    records.length > 0 ? records[records.length - 1].note?.trim() : undefined;
 
   return (
     <div className="screen">
@@ -39,6 +41,13 @@ export function Complete() {
           <br />
           마음은 잠시 쉬었어요.
         </div>
+
+        {lastNote && (
+          <div className={styles.noteCard}>
+            <div className={styles.noteLabel}>오늘 이렇게 적었어요</div>
+            <div className={styles.noteText}>“{lastNote}”</div>
+          </div>
+        )}
 
         <div className={styles.statsRow}>
           <div className={styles.statCard}>

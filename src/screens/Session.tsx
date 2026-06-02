@@ -102,7 +102,9 @@ export function Session() {
           />
         )}
 
-        {activity.type === 'quotes' && <QuoteCard quote={activity.quote} />}
+        {activity.type === 'quotes' && (
+          <QuoteCard quote={activity.quote} value={note} onChange={setNote} />
+        )}
 
         {isOver && (
           <div className={styles.overBanner}>

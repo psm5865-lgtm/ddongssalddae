@@ -16,12 +16,12 @@
 
 .progress {
   stroke: var(--blue-500);
-  transition: stroke-dashoffset 250ms linear, stroke 250ms var(--ease);
+  transition: stroke-dashoffset 500ms linear, stroke 300ms var(--ease);
   stroke-linecap: round;
 }
 
 .overTime .progress {
-  stroke: var(--gray-300);
+  stroke: var(--warning);
 }
 
 .label {
@@ -33,9 +33,9 @@
   font: var(--font-body-bold);
   font-variant-numeric: tabular-nums;
   font-size: 18px;
-  color: var(--gray-900);
+  color: var(--gray-500);
 }
 
 .overTime .label {
-  color: var(--gray-500);
+  color: var(--warning);
 }

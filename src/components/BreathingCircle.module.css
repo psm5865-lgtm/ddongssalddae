@@ -1,10 +1,11 @@
 .wrap {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-6);
-  padding: var(--space-8) 0;
+  padding: var(--space-6) 0;
 }
 
 .stage {
@@ -25,19 +26,20 @@
 }
 
 .circle {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  background: var(--blue-500);
+  background: linear-gradient(135deg, #5aa0ff 0%, #2e73e6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--white);
   font: var(--font-h2);
-  box-shadow: 0 12px 32px rgba(49, 130, 246, 0.35);
+  font-weight: 700;
+  box-shadow: 0 16px 36px rgba(49, 130, 246, 0.4);
 }
 
-.phaseText {
+.guide {
   font: var(--font-h3);
   color: var(--gray-900);
   font-size: 20px;
@@ -47,9 +49,4 @@
   font: var(--font-caption);
   color: var(--gray-500);
   font-variant-numeric: tabular-nums;
-}
-
-.done {
-  font: var(--font-body-bold);
-  color: var(--blue-500);
 }

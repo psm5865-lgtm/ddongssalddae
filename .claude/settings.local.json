@@ -30,7 +30,11 @@
       "Bash(git ls-tree *)",
       "Bash(git fetch *)",
       "Bash(curl -sS -o /dev/null -w 'HTTP %{http_code}\\\\n' https://ddongssalddae.vercel.app/)",
-      "Bash(curl -sS https://ddongssalddae.vercel.app/)"
+      "Bash(curl -sS https://ddongssalddae.vercel.app/)",
+      "WebSearch",
+      "WebFetch(domain:developers-apps-in-toss.toss.im)",
+      "Bash(npx ait *)",
+      "Bash(node -e \"const p=require\\('@apps-in-toss/web-framework/package.json'\\); console.log\\('version',p.version\\); console.log\\('exports:', JSON.stringify\\(p.exports,null,1\\)\\)\")"
     ]
   }
 }

@@ -7,6 +7,12 @@ type Props = {
   onComplete?: () => void;
 };
 
+const GUIDE: Record<string, string> = {
+  들이쉬기: '코로 천천히 들이마셔요',
+  멈춤: '잠시 그대로 멈춰요',
+  내쉬기: '입으로 길게 내쉬어요',
+};
+
 export function BreathingCircle({ onComplete }: Props) {
   const [cycle, setCycle] = useState(0); // 0..BREATHING_CYCLES
   const [phaseIdx, setPhaseIdx] = useState(0); // 0..2
@@ -43,22 +49,23 @@ export function BreathingCircle({ onComplete }: Props) {
           animate={{ scale: done ? 1.0 : currentPhase.scale }}
           transition={{
             duration: done ? 0.6 : currentPhase.seconds,
-            ease: currentPhase.label === '들이쉬기' ? 'easeOut' : currentPhase.label === '내쉬기' ? 'easeIn' : 'linear',
+            ease:
+              currentPhase.label === '들이쉬기'
+                ? 'easeOut'
+                : currentPhase.label === '내쉬기'
+                  ? 'easeIn'
+                  : 'linear',
           }}
         >
           {done ? '잘했어요' : currentPhase.label}
         </motion.div>
       </div>
-      <div className={styles.phaseText}>
-        {done ? (
-          <span className={styles.done}>호흡 완료</span>
-        ) : (
-          currentPhase.label
-        )}
+      <div className={styles.guide}>
+        {done ? '깊게 잘 쉬었어요' : GUIDE[currentPhase.label]}
       </div>
       <div className={styles.cycle}>
         {done
-          ? `${BREATHING_CYCLES}/${BREATHING_CYCLES} 사이클`
+          ? `${BREATHING_CYCLES}/${BREATHING_CYCLES} 사이클 완료`
           : `${cycle + 1}/${BREATHING_CYCLES} 사이클`}
       </div>
     </div>

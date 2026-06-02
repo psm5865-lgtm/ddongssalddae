@@ -3,3 +3,8 @@ dist
 .DS_Store
 *.local
 .vite
+
+.granite
+
+# 앱인토스 빌드 산출물
+*.ait

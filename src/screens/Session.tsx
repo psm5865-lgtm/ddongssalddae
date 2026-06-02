@@ -68,6 +68,14 @@ export function Session() {
   return (
     <div className="screen">
       <div className={styles.topBar}>
+        <button
+          type="button"
+          className={styles.back}
+          onClick={() => navigate('/home', { replace: true })}
+          aria-label="그만두기"
+        >
+          ‹
+        </button>
         <div className={styles.titleArea}>
           <span className={styles.eyebrow}>오늘의 마음챙김</span>
           <span className={styles.title}>{activity.title}</span>

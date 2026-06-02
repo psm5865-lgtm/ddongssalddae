@@ -34,7 +34,11 @@
       "WebSearch",
       "WebFetch(domain:developers-apps-in-toss.toss.im)",
       "Bash(npx ait *)",
-      "Bash(node -e \"const p=require\\('@apps-in-toss/web-framework/package.json'\\); console.log\\('version',p.version\\); console.log\\('exports:', JSON.stringify\\(p.exports,null,1\\)\\)\")"
+      "Bash(node -e \"const p=require\\('@apps-in-toss/web-framework/package.json'\\); console.log\\('version',p.version\\); console.log\\('exports:', JSON.stringify\\(p.exports,null,1\\)\\)\")",
+      "Bash(unzip -l ddongssalddae.ait)",
+      "Bash(tar -tf ddongssalddae.ait)",
+      "Bash(unzip -p ddongssalddae.ait web/manifest.webmanifest)",
+      "Bash(unzip -p ddongssalddae.ait web/index.html)"
     ]
   }
 }

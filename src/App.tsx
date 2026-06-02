@@ -1,4 +1,5 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Onboarding } from './screens/Onboarding';
 import { Home } from './screens/Home';
 import { Session } from './screens/Session';
@@ -18,9 +19,22 @@ function Root() {
   return settings.onboarded ? <Navigate to="/home" replace /> : <Onboarding />;
 }
 
+// 화면 이동 시 스크롤을 항상 맨 위로 — 스크롤 내린 채 이동하면
+// 새 화면도 내려간 상태로 떠서 '안 넘어간 것처럼' 보이던 문제 해결
+function ScrollReset() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const frame = document.querySelector<HTMLElement>('.app-frame');
+    frame?.scrollTo({ top: 0, left: 0 });
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <div className="app-frame">
+      <ScrollReset />
       <Routes>
         <Route path="/" element={<Root />} />
         <Route path="/home" element={<Gate element={<Home />} />} />

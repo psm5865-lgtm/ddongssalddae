@@ -4,6 +4,7 @@ import { Home } from './screens/Home';
 import { Session } from './screens/Session';
 import { Complete } from './screens/Complete';
 import { Settings } from './screens/Settings';
+import { Journal } from './screens/Journal';
 import { useSettings } from './store/settings';
 
 function Gate({ element }: { element: JSX.Element }) {
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/session" element={<Gate element={<Session />} />} />
         <Route path="/complete" element={<Gate element={<Complete />} />} />
         <Route path="/settings" element={<Gate element={<Settings />} />} />
+        <Route path="/journal" element={<Gate element={<Journal />} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>

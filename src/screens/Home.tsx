@@ -12,6 +12,9 @@ export function Home() {
   const today = todayString();
   const todayCount = countToday(records, today);
   const total = records.length;
+  const noteCount = records.filter(
+    (r) => r.note && r.note.trim().length > 0,
+  ).length;
   const name = nicknameOrFallback(settings.nickname);
 
   return (
@@ -69,6 +72,28 @@ export function Home() {
 
       <div className={styles.section}>
         <WeeklyStamps records={records} />
+        <button
+          type="button"
+          className={styles.journalRow}
+          onClick={() => navigate('/journal')}
+        >
+          <span className={styles.journalText}>내가 적은 기록</span>
+          <span className={styles.journalMeta}>
+            {noteCount > 0 ? `${noteCount}개` : '비어 있어요'}
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </span>
+        </button>
       </div>
 
       <div className={styles.footer}>

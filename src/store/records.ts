@@ -69,3 +69,14 @@ export function thisWeekCount(records: SessionRecord[], today: Date = new Date()
   const set = new Set(week.map((d) => d.dateStr));
   return records.filter((r) => set.has(r.date)).length;
 }
+
+/** 'YYYY-MM-DD' → '오늘' / '어제' / 'M월 D일' */
+export function formatRecordDate(dateStr: string, today: Date = new Date()): string {
+  if (dateStr === todayString(today)) return '오늘';
+  const yest = new Date(today);
+  yest.setHours(0, 0, 0, 0);
+  yest.setDate(yest.getDate() - 1);
+  if (dateStr === todayString(yest)) return '어제';
+  const parts = dateStr.split('-');
+  return `${Number(parts[1])}월 ${Number(parts[2])}일`;
+}

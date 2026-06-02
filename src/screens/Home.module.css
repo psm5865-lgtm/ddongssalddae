@@ -103,6 +103,36 @@
   flex: 1;
 }
 
+.journalRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4) var(--space-5);
+  transition: background-color 150ms var(--ease);
+}
+
+.journalRow:active {
+  background: var(--gray-50);
+}
+
+.journalText {
+  font: var(--font-body-bold);
+  color: var(--gray-900);
+}
+
+.journalMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--font-caption);
+  color: var(--gray-400);
+}
+
 .footer {
   padding-top: var(--space-4);
 }

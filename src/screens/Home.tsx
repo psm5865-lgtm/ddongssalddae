@@ -1,7 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { WeeklyStamps } from '../components/WeeklyStamps';
-import { useRecords, countToday, todayString } from '../store/records';
+import {
+  useRecords,
+  countToday,
+  todayString,
+  recordHasNote,
+} from '../store/records';
 import { useSettings, nicknameOrFallback } from '../store/settings';
 import styles from './Home.module.css';
 
@@ -12,9 +17,7 @@ export function Home() {
   const today = todayString();
   const todayCount = countToday(records, today);
   const total = records.length;
-  const noteCount = records.filter(
-    (r) => r.note && r.note.trim().length > 0,
-  ).length;
+  const noteCount = records.filter(recordHasNote).length;
   const name = nicknameOrFallback(settings.nickname);
 
   return (

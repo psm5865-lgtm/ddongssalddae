@@ -25,17 +25,6 @@ export type Activity =
   | { type: 'trivia'; title: string; trivia: Trivia }
   | { type: 'stretch'; title: string };
 
-const ALL_TYPES: ActivityType[] = [
-  'breathing',
-  'gratitude',
-  'goals',
-  'quotes',
-  'balance',
-  'mood',
-  'trivia',
-  'stretch',
-];
-
 const TITLES: Record<ActivityType, string> = {
   breathing: '깊게 숨 한 번',
   gratitude: '오늘의 한 줄',
@@ -51,12 +40,8 @@ function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-export function pickRandomActivity(prevType?: ActivityType | null): Activity {
-  const candidates = prevType
-    ? ALL_TYPES.filter((t) => t !== prevType)
-    : ALL_TYPES;
-  const type = pick(candidates);
-
+// 타입 → 콘텐츠 채운 Activity 1개
+function buildActivity(type: ActivityType): Activity {
   switch (type) {
     case 'breathing':
       return { type: 'breathing', title: TITLES.breathing, subtitle: BREATHING_INTRO };
@@ -85,6 +70,78 @@ export function pickRandomActivity(prevType?: ActivityType | null): Activity {
     case 'stretch':
       return { type: 'stretch', title: TITLES.stretch };
   }
+}
+
+const ALL_TYPES: ActivityType[] = [
+  'breathing',
+  'gratitude',
+  'goals',
+  'quotes',
+  'balance',
+  'mood',
+  'trivia',
+  'stretch',
+];
+
+export function pickRandomActivity(prevType?: ActivityType | null): Activity {
+  const candidates = prevType
+    ? ALL_TYPES.filter((t) => t !== prevType)
+    : ALL_TYPES;
+  return buildActivity(pick(candidates));
+}
+
+// ─── 덱(여러 카드) 엔진 ─────────────────────────────────────────────
+type Bucket = 'calm' | 'tap' | 'read' | 'write';
+
+const BUCKETS: Record<Bucket, ActivityType[]> = {
+  calm: ['breathing', 'stretch'], // 가이드형, 시간 채움, 차분히 연다
+  tap: ['balance', 'mood'], // 원탭 가벼운 상호작용
+  read: ['trivia', 'quotes'], // 읽기(호기심/음미)
+  write: ['gratitude', 'goals'], // 선택형 쓰기(덱당 최대 1장)
+};
+
+const SIZE_BY_LIMIT: Record<3 | 5 | 7, number> = { 3: 4, 5: 5, 7: 7 };
+
+const TEMPLATE_BY_SIZE: Record<number, Bucket[]> = {
+  4: ['calm', 'tap', 'read', 'write'],
+  5: ['calm', 'tap', 'read', 'tap', 'write'],
+  7: ['calm', 'read', 'tap', 'read', 'tap', 'write', 'calm'],
+};
+
+// 한 세션 = 짧은 카드 여러 장. 호흡으로 열고 → 탭/읽기 변주 → 쓰기로 닫기.
+export function buildDeck(opts: {
+  limitMin: 3 | 5 | 7;
+  prevType?: ActivityType | null;
+}): Activity[] {
+  const size = SIZE_BY_LIMIT[opts.limitMin] ?? 5;
+  const template = TEMPLATE_BY_SIZE[size] ?? TEMPLATE_BY_SIZE[5];
+
+  let prev: ActivityType | null = opts.prevType ?? null;
+  let usedWrite = false;
+  const usedTypes: ActivityType[] = [];
+  const deck: Activity[] = [];
+
+  for (const bucket of template) {
+    let pool =
+      bucket === 'write' && usedWrite
+        ? BUCKETS.read.slice() // (방어) 쓰기 2장 방지 → 읽기로 대체
+        : BUCKETS[bucket].slice();
+
+    // 직전 타입과 연속 금지
+    const noPrev = pool.filter((t) => t !== prev);
+    if (noPrev.length) pool = noPrev;
+
+    // 이번 덱에서 아직 안 쓴 타입 우선(변주)
+    const fresh = pool.filter((t) => !usedTypes.includes(t));
+    const type = pick(fresh.length ? fresh : pool);
+
+    if (bucket === 'write') usedWrite = true;
+    deck.push(buildActivity(type));
+    usedTypes.push(type);
+    prev = type;
+  }
+
+  return deck;
 }
 
 export function activityLabel(type: ActivityType): string {

@@ -15,9 +15,11 @@ import {
   useRecords,
   useLastActivityType,
   todayString,
+  recordMoods,
   type SessionRecord,
+  type SessionItem,
 } from '../store/records';
-import { pickRandomActivity, type Activity } from '../activities';
+import { buildDeck, type Activity } from '../activities';
 import styles from './Session.module.css';
 
 export function Session() {
@@ -26,20 +28,41 @@ export function Session() {
   const [records, setRecords] = useRecords();
   const [lastType, setLastType] = useLastActivityType();
 
-  const activityRef = useRef<Activity | null>(null);
-  if (activityRef.current === null) {
-    activityRef.current = pickRandomActivity(lastType);
+  // 세션당 덱 1회 생성
+  const deckRef = useRef<Activity[] | null>(null);
+  if (deckRef.current === null) {
+    deckRef.current = buildDeck({
+      limitMin: settings.limitMin,
+      prevType: lastType,
+    });
   }
-  const activity = activityRef.current;
+  const deck = deckRef.current;
+  const resultsRef = useRef<SessionItem[]>(deck.map((a) => ({ type: a.type })));
+
+  const [index, setIndex] = useState(0);
+  const current = deck[index];
+  const isLast = index === deck.length - 1;
 
   const totalSec = settings.limitMin * 60;
   const { elapsedSec, isOver } = useCountdown(totalSec, true);
 
+  // 카드 입력 상태 (카드 전환 시 리셋)
   const [note, setNote] = useState('');
   const [breathingDone, setBreathingDone] = useState(false);
   const [stretchDone, setStretchDone] = useState(false);
   const [choice, setChoice] = useState<'a' | 'b' | undefined>(undefined);
   const [mood, setMood] = useState<number | undefined>(undefined);
+
+  const cardStartRef = useRef(0);
+  useEffect(() => {
+    setNote('');
+    setBreathingDone(false);
+    setStretchDone(false);
+    setChoice(undefined);
+    setMood(undefined);
+    cardStartRef.current = elapsedSec;
+  }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
+  const cardElapsed = elapsedSec - cardStartRef.current;
 
   const vibratedRef = useRef(false);
   useEffect(() => {
@@ -51,39 +74,59 @@ export function Session() {
     }
   }, [isOver]);
 
-  // 기분 체크인용 최근 기록(오래된→최신)
-  const recentMoods = records
-    .filter((r) => typeof r.mood === 'number')
-    .slice(-7)
-    .map((r) => r.mood as number);
+  // 기분 스트립용 최근 기록(오래된→최신, 항목 평탄화)
+  const recentMoods = records.flatMap(recordMoods).slice(-7);
 
   const finish = () => {
-    const trimmedNote = note.trim();
+    const items = resultsRef.current;
+    const firstNote = items.find((i) => i.note && i.note.trim())?.note?.trim();
+    const lastMood = [...items].reverse().find((i) => i.mood != null)?.mood;
+    const firstChoice = items.find((i) => i.choice)?.choice;
     const record: SessionRecord = {
       date: todayString(),
       ts: Date.now(),
-      activityType: activity.type,
+      activityType: items[0].type,
       durationSec: elapsedSec,
-      ...(trimmedNote ? { note: trimmedNote } : {}),
-      ...(mood != null ? { mood } : {}),
-      ...(activity.type === 'balance' && choice
-        ? { choice: choice === 'a' ? activity.pair.a : activity.pair.b }
-        : {}),
+      items,
+      ...(firstNote ? { note: firstNote } : {}),
+      ...(lastMood != null ? { mood: lastMood } : {}),
+      ...(firstChoice ? { choice: firstChoice } : {}),
     };
     setRecords((prev) => [...prev, record]);
-    setLastType(activity.type);
+    setLastType(items[items.length - 1].type);
     navigate('/complete', { replace: true });
   };
 
-  const canFinish = useMemo(() => {
-    switch (activity.type) {
+  const handleNext = () => {
+    const item: SessionItem = { type: current.type };
+    const t = note.trim();
+    if (
+      (current.type === 'gratitude' ||
+        current.type === 'goals' ||
+        current.type === 'quotes') &&
+      t
+    ) {
+      item.note = t;
+    }
+    if (current.type === 'mood' && mood != null) item.mood = mood;
+    if (current.type === 'balance' && choice) {
+      item.choice = choice === 'a' ? current.pair.a : current.pair.b;
+    }
+    resultsRef.current[index] = item;
+
+    if (isLast) finish();
+    else setIndex((i) => i + 1);
+  };
+
+  const canAdvance = useMemo(() => {
+    switch (current.type) {
       case 'breathing':
-        return breathingDone || elapsedSec >= 30;
+        return breathingDone || cardElapsed >= 8;
       case 'stretch':
-        return stretchDone || elapsedSec >= 30;
+        return stretchDone || cardElapsed >= 8;
       case 'gratitude':
       case 'goals':
-        return note.trim().length > 0;
+        return true; // 쓰기는 선택 — 안 써도 다음
       case 'balance':
         return choice != null;
       case 'mood':
@@ -92,26 +135,24 @@ export function Session() {
       case 'trivia':
         return true;
     }
-  }, [activity.type, breathingDone, stretchDone, elapsedSec, note, choice, mood]);
+  }, [current.type, breathingDone, stretchDone, cardElapsed, choice, mood]);
 
   const buttonLabel = (() => {
-    switch (activity.type) {
-      case 'quotes':
-        return '마음에 새겼어요';
-      case 'trivia':
-        return '알았어요';
-      case 'breathing':
-        return breathingDone ? '끝내기' : '먼저 호흡에 집중해요';
-      case 'stretch':
-        return stretchDone ? '끝내기' : '스트레칭에 집중해요';
-      case 'balance':
-        return choice ? '골랐어요' : '둘 중 하나 골라요';
-      case 'mood':
-        return mood != null ? '기록할게요' : '기분을 골라요';
-      case 'gratitude':
-      case 'goals':
-        return '저장하고 끝내기';
+    if (!canAdvance) {
+      switch (current.type) {
+        case 'breathing':
+          return '먼저 호흡에 집중해요';
+        case 'stretch':
+          return '스트레칭에 집중해요';
+        case 'balance':
+          return '둘 중 하나 골라요';
+        case 'mood':
+          return '기분을 골라요';
+        default:
+          return '다음';
+      }
     }
+    return isLast ? '마치기' : '다음';
   })();
 
   return (
@@ -127,7 +168,7 @@ export function Session() {
         </button>
         <div className={styles.titleArea}>
           <span className={styles.eyebrow}>오늘의 마음챙김</span>
-          <span className={styles.title}>{activity.title}</span>
+          <span className={styles.title}>{current.title}</span>
         </div>
         <CountdownRing
           totalSec={totalSec}
@@ -136,46 +177,52 @@ export function Session() {
         />
       </div>
 
+      <div className={styles.dots} aria-hidden="true">
+        {deck.map((_, i) => (
+          <span
+            key={i}
+            className={`${styles.dot} ${
+              i === index ? styles.dotActive : i < index ? styles.dotDone : ''
+            }`}
+          />
+        ))}
+      </div>
+
       <div className={styles.body}>
-        {activity.type === 'breathing' && (
-          <BreathingCircle onComplete={() => setBreathingDone(true)} />
-        )}
-
-        {activity.type === 'stretch' && (
-          <StretchGuide onComplete={() => setStretchDone(true)} />
-        )}
-
-        {activity.type === 'gratitude' && (
-          <TextEntry
-            prompt={activity.prompt}
-            placeholder={activity.placeholder}
-            value={note}
-            onChange={setNote}
-          />
-        )}
-
-        {activity.type === 'goals' && (
-          <TextEntry
-            prompt={activity.prompt}
-            placeholder={activity.placeholder}
-            value={note}
-            onChange={setNote}
-          />
-        )}
-
-        {activity.type === 'quotes' && (
-          <QuoteCard quote={activity.quote} value={note} onChange={setNote} />
-        )}
-
-        {activity.type === 'balance' && (
-          <BalanceCard pair={activity.pair} value={choice} onChange={setChoice} />
-        )}
-
-        {activity.type === 'mood' && (
-          <MoodCheck value={mood} onChange={setMood} recent={recentMoods} />
-        )}
-
-        {activity.type === 'trivia' && <TriviaCard trivia={activity.trivia} />}
+        <div className={styles.card} key={index}>
+          {current.type === 'breathing' && (
+            <BreathingCircle onComplete={() => setBreathingDone(true)} />
+          )}
+          {current.type === 'stretch' && (
+            <StretchGuide onComplete={() => setStretchDone(true)} />
+          )}
+          {current.type === 'gratitude' && (
+            <TextEntry
+              prompt={current.prompt}
+              placeholder={current.placeholder}
+              value={note}
+              onChange={setNote}
+            />
+          )}
+          {current.type === 'goals' && (
+            <TextEntry
+              prompt={current.prompt}
+              placeholder={current.placeholder}
+              value={note}
+              onChange={setNote}
+            />
+          )}
+          {current.type === 'quotes' && (
+            <QuoteCard quote={current.quote} value={note} onChange={setNote} />
+          )}
+          {current.type === 'balance' && (
+            <BalanceCard pair={current.pair} value={choice} onChange={setChoice} />
+          )}
+          {current.type === 'mood' && (
+            <MoodCheck value={mood} onChange={setMood} recent={recentMoods} />
+          )}
+          {current.type === 'trivia' && <TriviaCard trivia={current.trivia} />}
+        </div>
 
         {isOver && (
           <div className={styles.overBanner}>
@@ -186,7 +233,7 @@ export function Session() {
       </div>
 
       <div className={styles.footer}>
-        <PrimaryButton onClick={finish} disabled={!canFinish}>
+        <PrimaryButton onClick={handleNext} disabled={!canAdvance}>
           {buttonLabel}
         </PrimaryButton>
       </div>

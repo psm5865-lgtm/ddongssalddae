@@ -1,15 +1,65 @@
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { ActivityType } from '../activities';
 
+export type SessionItem = {
+  type: ActivityType;
+  note?: string;
+  mood?: number;
+  choice?: string;
+};
+
 export type SessionRecord = {
   date: string; // 'YYYY-MM-DD'
   ts: number;   // session end timestamp
-  activityType: ActivityType;
+  activityType: ActivityType; // 대표 타입(= items[0].type), 후방호환용
   durationSec: number;
-  note?: string;   // 감사·다짐·문장에서 적은 한 줄
-  mood?: number;   // 기분 체크인 점수(1~5)
-  choice?: string; // 밸런스게임에서 고른 쪽
+  items?: SessionItem[]; // 덱 전체. 옛 기록엔 없음(옵셔널 → 마이그레이션 불필요)
+  note?: string;   // 상위 미러(후방호환 + Complete 편의)
+  mood?: number;
+  choice?: string;
 };
+
+/** 활동 타입 → 짧은 한국어 태그 (Journal·Complete 공용) */
+export const ACTIVITY_TAG: Record<ActivityType, string> = {
+  breathing: '호흡',
+  gratitude: '감사',
+  goals: '다짐',
+  quotes: '문장',
+  balance: '선택',
+  mood: '기분',
+  trivia: '지식',
+  stretch: '스트레칭',
+};
+
+/** 기록의 카드 항목들. 옛 flat 기록이면 상위 필드로 1개 합성. */
+export function recordItems(r: SessionRecord): SessionItem[] {
+  if (r.items && r.items.length > 0) return r.items;
+  const item: SessionItem = { type: r.activityType };
+  if (r.note != null) item.note = r.note;
+  if (r.mood != null) item.mood = r.mood;
+  if (r.choice != null) item.choice = r.choice;
+  return [item];
+}
+
+/** 메모가 있는 항목만 {type, note}로 */
+export function recordNotes(
+  r: SessionRecord,
+): { type: ActivityType; note: string }[] {
+  return recordItems(r)
+    .filter((i) => i.note && i.note.trim().length > 0)
+    .map((i) => ({ type: i.type, note: (i.note as string).trim() }));
+}
+
+/** 기분 점수들 */
+export function recordMoods(r: SessionRecord): number[] {
+  return recordItems(r)
+    .filter((i) => typeof i.mood === 'number')
+    .map((i) => i.mood as number);
+}
+
+export function recordHasNote(r: SessionRecord): boolean {
+  return recordNotes(r).length > 0;
+}
 
 const RECORDS_KEY = 'ddongssalddae:records';
 const LAST_TYPE_KEY = 'ddongssalddae:last-type';

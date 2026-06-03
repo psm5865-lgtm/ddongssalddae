@@ -1,8 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PrimaryButton } from '../components/PrimaryButton';
-import { useRecords, thisWeekCount } from '../store/records';
+import {
+  useRecords,
+  thisWeekCount,
+  recordItems,
+  recordNotes,
+  recordMoods,
+  ACTIVITY_TAG,
+} from '../store/records';
 import { useSettings, nicknameOrFallback } from '../store/settings';
+import { moodByScore } from '../activities/mood';
 import styles from './Complete.module.css';
 
 export function Complete() {
@@ -13,8 +21,13 @@ export function Complete() {
   const weekCount = thisWeekCount(records);
   const total = records.length;
   const name = nicknameOrFallback(settings.nickname);
-  const lastNote =
-    records.length > 0 ? records[records.length - 1].note?.trim() : undefined;
+
+  const last = records.length > 0 ? records[records.length - 1] : undefined;
+  const chips = last ? recordItems(last).map((i) => ACTIVITY_TAG[i.type]) : [];
+  const lastNote = last ? recordNotes(last)[0]?.note : undefined;
+  const moods = last ? recordMoods(last) : [];
+  const moodEmoji =
+    moods.length > 0 ? moodByScore(moods[moods.length - 1])?.emoji : undefined;
 
   return (
     <div className="screen">
@@ -41,6 +54,22 @@ export function Complete() {
           <br />
           마음은 잠시 쉬었어요.
         </div>
+
+        {chips.length > 0 && (
+          <div className={styles.chips}>
+            {chips.map((c, i) => (
+              <span key={i} className={styles.chip}>
+                {c}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {moodEmoji && (
+          <div className={styles.moodLine}>
+            오늘 기분 <span className={styles.moodEmoji}>{moodEmoji}</span>
+          </div>
+        )}
 
         {lastNote && (
           <div className={styles.noteCard}>

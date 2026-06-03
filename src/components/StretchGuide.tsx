@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { STRETCH_SEQUENCE } from '../activities/stretch';
 import styles from './StretchGuide.module.css';
@@ -11,6 +11,10 @@ export function StretchGuide({ onComplete }: Props) {
   const [idx, setIdx] = useState(0);
   const [done, setDone] = useState(false);
 
+  // 콜백은 ref로 — 부모가 매초 리렌더해도 동작 타이머가 끊기지 않게
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
   useEffect(() => {
     if (done) return;
     const step = STRETCH_SEQUENCE[idx];
@@ -19,11 +23,11 @@ export function StretchGuide({ onComplete }: Props) {
         setIdx(idx + 1);
       } else {
         setDone(true);
-        onComplete?.();
+        onCompleteRef.current?.();
       }
     }, step.seconds * 1000);
     return () => window.clearTimeout(id);
-  }, [idx, done, onComplete]);
+  }, [idx, done]);
 
   const step = STRETCH_SEQUENCE[idx];
 

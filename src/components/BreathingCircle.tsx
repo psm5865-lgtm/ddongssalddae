@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { BREATHING_CYCLE, BREATHING_CYCLES } from '../activities/breathing';
 import styles from './BreathingCircle.module.css';
@@ -18,6 +18,10 @@ export function BreathingCircle({ onComplete }: Props) {
   const [phaseIdx, setPhaseIdx] = useState(0); // 0..2
   const [done, setDone] = useState(false);
 
+  // 콜백은 ref로 — 부모가 매초 리렌더해도 호흡 타이머가 끊기지 않게
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
   useEffect(() => {
     if (done) return;
     const phase = BREATHING_CYCLE[phaseIdx];
@@ -28,7 +32,7 @@ export function BreathingCircle({ onComplete }: Props) {
         const nextCycle = cycle + 1;
         if (nextCycle >= BREATHING_CYCLES) {
           setDone(true);
-          onComplete?.();
+          onCompleteRef.current?.();
         } else {
           setCycle(nextCycle);
           setPhaseIdx(0);
@@ -36,7 +40,7 @@ export function BreathingCircle({ onComplete }: Props) {
       }
     }, phase.seconds * 1000);
     return () => window.clearTimeout(id);
-  }, [phaseIdx, cycle, done, onComplete]);
+  }, [phaseIdx, cycle, done]);
 
   const currentPhase = BREATHING_CYCLE[phaseIdx];
 

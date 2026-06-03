@@ -38,7 +38,8 @@
       "Bash(unzip -l ddongssalddae.ait)",
       "Bash(tar -tf ddongssalddae.ait)",
       "Bash(unzip -p ddongssalddae.ait web/manifest.webmanifest)",
-      "Bash(unzip -p ddongssalddae.ait web/index.html)"
+      "Bash(unzip -p ddongssalddae.ait web/index.html)",
+      "Bash(awk '{print $5, $9}')"
     ]
   }
 }

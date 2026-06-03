@@ -19,8 +19,21 @@ import {
   type SessionRecord,
   type SessionItem,
 } from '../store/records';
-import { buildDeck, type Activity } from '../activities';
+import { buildDeck, type Activity, type ActivityType } from '../activities';
 import styles from './Session.module.css';
+
+// 카드별 최소 머무는 시간(ms). 차분 카드는 가이드가 끝날 때까지를 백스톱으로,
+// 읽기 카드는 잠깐 음미할 시간을. 탭/쓰기는 0(선택·완료가 게이트).
+const DWELL_MS: Record<ActivityType, number> = {
+  breathing: 52000, // 4사이클(48s) + 여유 — 보통은 onComplete가 먼저 연다
+  stretch: 82000, // 6동작(78s) + 여유
+  trivia: 6000,
+  quotes: 6000,
+  balance: 0,
+  mood: 0,
+  gratitude: 0,
+  goals: 0,
+};
 
 export function Session() {
   const navigate = useNavigate();
@@ -52,17 +65,25 @@ export function Session() {
   const [stretchDone, setStretchDone] = useState(false);
   const [choice, setChoice] = useState<'a' | 'b' | undefined>(undefined);
   const [mood, setMood] = useState<number | undefined>(undefined);
+  const [dwellReady, setDwellReady] = useState(false);
 
-  const cardStartRef = useRef(0);
   useEffect(() => {
     setNote('');
     setBreathingDone(false);
     setStretchDone(false);
     setChoice(undefined);
     setMood(undefined);
-    cardStartRef.current = elapsedSec;
+
+    // 카드별 최소 머무름 — setTimeout 기반이라 탭이 가려져도 안정적으로 동작
+    setDwellReady(false);
+    const ms = DWELL_MS[current.type] ?? 0;
+    if (ms <= 0) {
+      setDwellReady(true);
+      return;
+    }
+    const id = window.setTimeout(() => setDwellReady(true), ms);
+    return () => window.clearTimeout(id);
   }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
-  const cardElapsed = elapsedSec - cardStartRef.current;
 
   const vibratedRef = useRef(false);
   useEffect(() => {
@@ -121,9 +142,9 @@ export function Session() {
   const canAdvance = useMemo(() => {
     switch (current.type) {
       case 'breathing':
-        return breathingDone || cardElapsed >= 8;
+        return breathingDone || dwellReady; // 호흡을 끝까지 마쳐야 (백스톱: dwell)
       case 'stretch':
-        return stretchDone || cardElapsed >= 8;
+        return stretchDone || dwellReady; // 스트레칭을 끝까지 마쳐야
       case 'gratitude':
       case 'goals':
         return true; // 쓰기는 선택 — 안 써도 다음
@@ -133,9 +154,9 @@ export function Session() {
         return mood != null;
       case 'quotes':
       case 'trivia':
-        return true;
+        return dwellReady; // 잠깐 읽을 시간을 둔다
     }
-  }, [current.type, breathingDone, stretchDone, cardElapsed, choice, mood]);
+  }, [current.type, breathingDone, stretchDone, dwellReady, choice, mood]);
 
   const buttonLabel = (() => {
     if (!canAdvance) {
@@ -148,6 +169,9 @@ export function Session() {
           return '둘 중 하나 골라요';
         case 'mood':
           return '기분을 골라요';
+        case 'quotes':
+        case 'trivia':
+          return '잠깐 읽어볼까요';
         default:
           return '다음';
       }

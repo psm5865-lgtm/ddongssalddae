@@ -48,7 +48,8 @@
       "Bash(curl -s -o /dev/null -w \"root: %{http_code} %{content_type}\\\\n\" \"https://ddongssalddae.vercel.app/\")",
       "Bash(curl -s \"https://ddongssalddae.vercel.app/\")",
       "Bash(curl -s -o /dev/null -w \"repo page: %{http_code}\\\\n\" \"https://github.com/psm5865-lgtm/ddongssalddae\")",
-      "Bash(curl -sL -o /dev/null -w '%{http_code} %{content_type}' https://cdn.jsdelivr.net/gh/psm5865-lgtm/ddongssalddae@main/public/__TRACKED_VAR__)"
+      "Bash(curl -sL -o /dev/null -w '%{http_code} %{content_type}' https://cdn.jsdelivr.net/gh/psm5865-lgtm/ddongssalddae@main/public/__TRACKED_VAR__)",
+      "Bash(gh auth *)"
     ]
   }
 }

@@ -25,10 +25,10 @@ import styles from './Session.module.css';
 // 카드별 최소 머무는 시간(ms). 차분 카드는 가이드가 끝날 때까지를 백스톱으로,
 // 읽기 카드는 잠깐 음미할 시간을. 탭/쓰기는 0(선택·완료가 게이트).
 const DWELL_MS: Record<ActivityType, number> = {
-  breathing: 52000, // 4사이클(48s) + 여유 — 보통은 onComplete가 먼저 연다
-  stretch: 82000, // 6동작(78s) + 여유
-  trivia: 6000,
-  quotes: 6000,
+  breathing: 76000, // 6사이클(72s) + 여유 — 보통은 onComplete가 먼저 연다
+  stretch: 108000, // 8동작(104s) + 여유
+  trivia: 8000,
+  quotes: 8000,
   balance: 0,
   mood: 0,
   gratitude: 0,

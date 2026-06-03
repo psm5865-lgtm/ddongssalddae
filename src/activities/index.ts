@@ -100,13 +100,13 @@ const BUCKETS: Record<Bucket, ActivityType[]> = {
   write: ['gratitude', 'goals'], // 선택형 쓰기(덱당 최대 1장)
 };
 
-const SIZE_BY_LIMIT: Record<3 | 5 | 7, number> = { 3: 4, 5: 5, 7: 7 };
+const SIZE_BY_LIMIT: Record<3 | 5 | 7, number> = { 3: 5, 5: 7, 7: 9 };
 
 const TEMPLATE_BY_SIZE: Record<number, Bucket[]> = {
-  // 차분(호흡·스트레칭) 카드를 '시간의 척추'로 — 5·7분은 둘 다 넣어 충분히 채운다
-  4: ['calm', 'tap', 'read', 'write'],
-  5: ['calm', 'read', 'tap', 'write', 'calm'],
-  7: ['calm', 'read', 'tap', 'read', 'tap', 'write', 'calm'],
+  // 차분(호흡·스트레칭) 2장이 '시간의 척추', 그 사이를 읽기·탭·쓰기로 변주.
+  5: ['calm', 'tap', 'read', 'write', 'calm'],
+  7: ['calm', 'read', 'tap', 'write', 'tap', 'read', 'calm'],
+  9: ['calm', 'read', 'tap', 'read', 'tap', 'write', 'read', 'tap', 'calm'],
 };
 
 // 한 세션 = 짧은 카드 여러 장. 호흡으로 열고 → 탭/읽기 변주 → 쓰기로 닫기.

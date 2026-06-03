@@ -5,28 +5,39 @@
   html,body{width:636px;height:1048px;overflow:hidden}
   body{font-family:-apple-system,'Apple SD Gothic Neo','Pretendard',sans-serif}
   .wrap{width:636px;height:1048px;background:linear-gradient(160deg,#E8F1FF,#F7FAFF);display:flex;flex-direction:column}
-  .cap{padding:62px 52px 22px}
-  .cap h2{font-size:47px;font-weight:800;color:#191F28;letter-spacing:-1.5px;line-height:1.25}
-  .cap p{font-size:25px;color:#4E5968;margin-top:16px;font-weight:500}
-  .screen{flex:1;margin:16px 44px 54px;background:#F9FAFB;border-radius:44px;box-shadow:0 30px 70px rgba(30,60,120,.16);
-    padding:42px 32px;display:flex;flex-direction:column;gap:18px;color:#191F28}
-  .jtop{font-size:30px;font-weight:800;text-align:center;margin-bottom:6px}
-  .dateLabel{font-size:20px;font-weight:700;color:#8B95A1;padding-left:4px}
-  .card{background:#fff;border:1px solid #F2F4F6;border-radius:24px;box-shadow:0 4px 14px rgba(0,0,0,.04);
-    padding:26px 28px;display:flex;flex-direction:column;gap:12px}
-  .tag{align-self:flex-start;font-size:19px;font-weight:700;color:#1B64DA;background:#E8F3FF;padding:4px 14px;border-radius:999px}
-  .note{font-size:27px;color:#191F28;line-height:1.5;margin:0}
+  .cap{padding:60px 52px 18px}
+  .cap h2{font-size:46px;font-weight:800;color:#191F28;letter-spacing:-1.5px;line-height:1.25}
+  .cap p{font-size:24px;color:#4E5968;margin-top:14px;font-weight:500}
+  .screen{flex:1;margin:14px 44px 50px;background:#fff;border-radius:44px;box-shadow:0 30px 70px rgba(30,60,120,.16);
+    padding:54px 40px;display:flex;flex-direction:column;align-items:center;color:#191F28}
+  .stampWrap{width:150px;height:150px;border-radius:50%;background:#E8F3FF;display:flex;align-items:center;justify-content:center}
+  .stamp{width:100px;height:100px;border-radius:50%;background:#3182F6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:800;box-shadow:0 12px 28px rgba(49,130,246,.4)}
+  .h{font-size:34px;font-weight:800;margin-top:34px;letter-spacing:-1px;text-align:center}
+  .sub{font-size:24px;color:#4E5968;margin-top:14px;text-align:center;line-height:1.5;font-weight:500}
+  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+  .chip{font-size:21px;font-weight:700;color:#1B64DA;background:#E8F3FF;padding:9px 20px;border-radius:999px}
+  .mood{font-size:23px;color:#8B95A1;margin-top:24px;font-weight:500}
+  .mood b{font-size:27px;vertical-align:middle}
+  .spacer{flex:1}
+  .stats{display:flex;gap:16px;width:100%;margin-top:20px}
+  .stat{flex:1;background:#F9FAFB;border:1px solid #F2F4F6;border-radius:24px;padding:26px;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .sv{font-size:38px;font-weight:800}
+  .sl{font-size:21px;color:#8B95A1}
 </style></head>
 <body>
   <div class="wrap">
-    <div class="cap"><h2>적은 한 줄이<br>차곡차곡 쌓여요</h2><p>점수도 알림도 없이, 내 기록만.</p></div>
+    <div class="cap"><h2>오늘도 개운하게,<br>도장 꾹</h2><p>점수도 알림도 없이, 오늘 한 것만 콕.</p></div>
     <div class="screen">
-      <div class="jtop">내가 적은 기록</div>
-      <div class="dateLabel">오늘</div>
-      <div class="card"><span class="tag">문장</span><p class="note">오늘은 좀 천천히 가보자</p></div>
-      <div class="dateLabel">어제</div>
-      <div class="card"><span class="tag">감사</span><p class="note">엄마가 끓여준 미역국 한 그릇</p></div>
-      <div class="card"><span class="tag">다짐</span><p class="note">자기 전에 폰 대신 책 5분 읽기</p></div>
+      <div class="stampWrap"><div class="stamp">✓</div></div>
+      <div class="h">오늘도 잘 했어요, 샘님</div>
+      <div class="sub">핸드폰을 들고 있어도<br>마음은 잠시 쉬었어요.</div>
+      <div class="chips"><span class="chip">호흡</span><span class="chip">선택</span><span class="chip">지식</span><span class="chip">스트레칭</span><span class="chip">기분</span></div>
+      <div class="mood">오늘 기분 <b>🙂</b></div>
+      <div class="spacer"></div>
+      <div class="stats">
+        <div class="stat"><span class="sv">4</span><span class="sl">이번 주</span></div>
+        <div class="stat"><span class="sv">12</span><span class="sl">누적</span></div>
+      </div>
     </div>
   </div>
 </body></html>

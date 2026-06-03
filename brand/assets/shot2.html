@@ -5,30 +5,42 @@
   html,body{width:636px;height:1048px;overflow:hidden}
   body{font-family:-apple-system,'Apple SD Gothic Neo','Pretendard',sans-serif}
   .wrap{width:636px;height:1048px;background:linear-gradient(160deg,#E8F1FF,#F7FAFF);display:flex;flex-direction:column}
-  .cap{padding:62px 52px 22px}
-  .cap h2{font-size:47px;font-weight:800;color:#191F28;letter-spacing:-1.5px;line-height:1.25}
-  .cap p{font-size:25px;color:#4E5968;margin-top:16px;font-weight:500}
-  .screen{flex:1;margin:16px 44px 54px;background:#fff;border-radius:44px;box-shadow:0 30px 70px rgba(30,60,120,.16);
-    padding:46px 40px;display:flex;flex-direction:column;color:#191F28}
-  .lbl{font-size:23px;font-weight:700;color:#3182F6}
+  .cap{padding:60px 52px 18px}
+  .cap h2{font-size:46px;font-weight:800;color:#191F28;letter-spacing:-1.5px;line-height:1.25}
+  .cap p{font-size:24px;color:#4E5968;margin-top:14px;font-weight:500}
+  .screen{flex:1;margin:14px 44px 50px;background:#fff;border-radius:44px;box-shadow:0 30px 70px rgba(30,60,120,.16);
+    padding:40px 36px;display:flex;flex-direction:column;color:#191F28}
+  .bar{display:flex;align-items:center}
+  .eye{font-size:21px;font-weight:700;color:#3182F6}
+  .ttl{font-size:30px;font-weight:800;letter-spacing:-1px;margin-top:4px}
+  .ring{width:84px;height:84px;border-radius:50%;border:6px solid #E8F3FF;border-top-color:#3182F6;transform:rotate(40deg);
+    display:flex;align-items:center;justify-content:center;margin-left:auto}
+  .ring span{transform:rotate(-40deg);font-size:21px;font-weight:700}
+  .dots{display:flex;justify-content:center;gap:7px;margin:26px 0 4px}
+  .dot{width:8px;height:8px;border-radius:99px;background:#E5E8EB}
+  .dot.act{width:22px;background:#3182F6}
+  .dot.done{background:#B7D5FF}
   .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
-  .halo{width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,#E8F3FF 0%,transparent 68%);
+  .halo{width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#E8F3FF 0%,transparent 68%);
     display:flex;align-items:center;justify-content:center}
-  .circle{width:210px;height:210px;border-radius:50%;background:linear-gradient(135deg,#5AA0FF,#2E73E6);
+  .circle{width:206px;height:206px;border-radius:50%;background:linear-gradient(135deg,#5AA0FF,#2E73E6);
     box-shadow:0 22px 54px rgba(49,130,246,.45);display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px;font-weight:700}
-  .phase{font-size:36px;font-weight:700;margin-top:34px}
-  .cyc{font-size:25px;color:#8B95A1;margin-top:12px}
+  .guide{font-size:30px;font-weight:700;margin-top:32px}
+  .cyc{font-size:23px;color:#8B95A1;margin-top:12px}
+  .btn{height:84px;border-radius:22px;background:#3182F6;color:#fff;font-size:27px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:8px}
 </style></head>
 <body>
   <div class="wrap">
-    <div class="cap"><h2>4·7·8 호흡으로<br>마음을 가라앉혀요</h2><p>들이쉬고, 멈추고, 내쉬고.</p></div>
+    <div class="cap"><h2>크게 한 숨,<br>들이쉬고 길게 내쉬고</h2><p>4초 들이쉬고, 6초 내쉬어요.</p></div>
     <div class="screen">
-      <div class="lbl">깊게 숨 한 번</div>
+      <div class="bar"><div><div class="eye">오늘의 마음챙김</div><div class="ttl">깊게 숨 한 번</div></div><div class="ring"><span>0:42</span></div></div>
+      <div class="dots"><i class="dot act"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
       <div class="center">
         <div class="halo"><div class="circle">들이쉬기</div></div>
-        <div class="phase">들이쉬기</div>
-        <div class="cyc">2 / 4 사이클</div>
+        <div class="guide">코로 천천히 들이마셔요</div>
+        <div class="cyc">1 / 6 사이클</div>
       </div>
+      <div class="btn">다음</div>
     </div>
   </div>
 </body></html>

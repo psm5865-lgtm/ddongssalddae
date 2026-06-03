@@ -5,28 +5,44 @@
   html,body{width:636px;height:1048px;overflow:hidden}
   body{font-family:-apple-system,'Apple SD Gothic Neo','Pretendard',sans-serif}
   .wrap{width:636px;height:1048px;background:linear-gradient(160deg,#E8F1FF,#F7FAFF);display:flex;flex-direction:column}
-  .cap{padding:62px 52px 22px}
-  .cap h2{font-size:47px;font-weight:800;color:#191F28;letter-spacing:-1.5px;line-height:1.25}
-  .cap p{font-size:25px;color:#4E5968;margin-top:16px;font-weight:500}
-  .screen{flex:1;margin:16px 44px 54px;background:#fff;border-radius:44px;box-shadow:0 30px 70px rgba(30,60,120,.16);
-    padding:46px 40px;display:flex;flex-direction:column;color:#191F28}
-  .lbl{font-size:23px;font-weight:700;color:#3182F6}
-  .prompt{font-size:38px;font-weight:800;line-height:1.4;letter-spacing:-1px;margin-top:38px}
-  .field{margin-top:34px;background:#F9FAFB;border:1px solid #E5E8EB;border-radius:20px;padding:28px 26px;font-size:28px;color:#191F28;min-height:160px}
-  .counter{margin-top:14px;text-align:right;font-size:20px;color:#B0B8C1}
-  .spacer{flex:1}
-  .btn{height:86px;border-radius:22px;background:#3182F6;color:#fff;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .cap{padding:60px 52px 18px}
+  .cap h2{font-size:46px;font-weight:800;color:#191F28;letter-spacing:-1.5px;line-height:1.25}
+  .cap p{font-size:24px;color:#4E5968;margin-top:14px;font-weight:500}
+  .screen{flex:1;margin:14px 44px 50px;background:#fff;border-radius:44px;box-shadow:0 30px 70px rgba(30,60,120,.16);
+    padding:40px 36px;display:flex;flex-direction:column;color:#191F28}
+  .bar{display:flex;align-items:center}
+  .eye{font-size:21px;font-weight:700;color:#3182F6}
+  .ttl{font-size:30px;font-weight:800;letter-spacing:-1px;margin-top:4px}
+  .ring{width:84px;height:84px;border-radius:50%;border:6px solid #E8F3FF;border-top-color:#3182F6;transform:rotate(300deg);
+    display:flex;align-items:center;justify-content:center;margin-left:auto}
+  .ring span{transform:rotate(-300deg);font-size:21px;font-weight:700}
+  .dots{display:flex;justify-content:center;gap:7px;margin:26px 0 4px}
+  .dot{width:8px;height:8px;border-radius:99px;background:#E5E8EB}
+  .dot.act{width:22px;background:#3182F6}
+  .dot.done{background:#B7D5FF}
+  .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .halo{width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#E8F3FF 0%,transparent 68%);
+    display:flex;align-items:center;justify-content:center}
+  .circle{width:206px;height:206px;border-radius:50%;background:linear-gradient(135deg,#5AA0FF,#2E73E6);
+    box-shadow:0 22px 54px rgba(49,130,246,.45);display:flex;align-items:center;justify-content:center;color:#fff;font-size:74px;font-weight:800}
+  .name{font-size:32px;font-weight:800;margin-top:30px;letter-spacing:-1px}
+  .instr{font-size:25px;color:#4E5968;margin-top:14px;font-weight:500;text-align:center}
+  .count{font-size:23px;color:#8B95A1;margin-top:14px}
+  .btn{height:84px;border-radius:22px;background:#3182F6;color:#fff;font-size:27px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:8px}
 </style></head>
 <body>
   <div class="wrap">
-    <div class="cap"><h2>감사도 다짐도,<br>한 줄이면 충분해요</h2><p>쓰고 나면 도장 하나 — 그게 전부예요.</p></div>
+    <div class="cap"><h2>마무리는<br>앉아서 몸풀기</h2><p>변기 위 스트레칭, 생각보다 시원해요.</p></div>
     <div class="screen">
-      <div class="lbl">오늘의 한 줄</div>
-      <div class="prompt">오늘 작게라도<br>감사한 일 한 가지는?</div>
-      <div class="field">엄마가 끓여준 미역국 한 그릇</div>
-      <div class="counter">14 / 140</div>
-      <div class="spacer"></div>
-      <div class="btn">저장하고 끝내기</div>
+      <div class="bar"><div><div class="eye">오늘의 마음챙김</div><div class="ttl">몸 펴기</div></div><div class="ring"><span>4:30</span></div></div>
+      <div class="dots"><i class="dot done"></i><i class="dot done"></i><i class="dot done"></i><i class="dot done"></i><i class="dot done"></i><i class="dot done"></i><i class="dot act"></i></div>
+      <div class="center">
+        <div class="halo"><div class="circle">1</div></div>
+        <div class="name">목 오른쪽</div>
+        <div class="instr">고개를 천천히 오른쪽으로 기울여요</div>
+        <div class="count">1 / 8</div>
+      </div>
+      <div class="btn">다음</div>
     </div>
   </div>
 </body></html>

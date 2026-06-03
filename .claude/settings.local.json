@@ -40,7 +40,15 @@
       "Bash(unzip -p ddongssalddae.ait web/manifest.webmanifest)",
       "Bash(unzip -p ddongssalddae.ait web/index.html)",
       "Bash(awk '{print $5, $9}')",
-      "Bash(awk '{print \"ait:\", $5, \"bytes\"}')"
+      "Bash(awk '{print \"ait:\", $5, \"bytes\"}')",
+      "Bash(git log *)",
+      "Bash(git -c user.name=ddongssalddae -c user.email=noreply@example.com commit -q -m 'docs: 스토어 등록 정보\\(부제·상세설명·키워드·출시노트·스샷매핑\\) 정리 *)",
+      "Bash(curl -sI \"https://ddongssalddae.vercel.app/favicon.svg\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code} %{content_type}' https://ddongssalddae.vercel.app/__TRACKED_VAR__)",
+      "Bash(curl -s -o /dev/null -w \"root: %{http_code} %{content_type}\\\\n\" \"https://ddongssalddae.vercel.app/\")",
+      "Bash(curl -s \"https://ddongssalddae.vercel.app/\")",
+      "Bash(curl -s -o /dev/null -w \"repo page: %{http_code}\\\\n\" \"https://github.com/psm5865-lgtm/ddongssalddae\")",
+      "Bash(curl -sL -o /dev/null -w '%{http_code} %{content_type}' https://cdn.jsdelivr.net/gh/psm5865-lgtm/ddongssalddae@main/public/__TRACKED_VAR__)"
     ]
   }
 }

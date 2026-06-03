@@ -6,7 +6,9 @@ export default defineConfig({
   brand: {
     displayName: '똥쌀때',
     primaryColor: '#3182F6',
-    icon: 'https://ddongssalddae.vercel.app/favicon.svg',
+    // Vercel 배포가 죽어 SVG가 404 → 로고 안 뜸. 공개 GitHub repo를 jsDelivr CDN으로
+    // 안정 서빙하는 PNG로 교체(Vercel 의존 제거).
+    icon: 'https://cdn.jsdelivr.net/gh/psm5865-lgtm/ddongssalddae@main/public/icon-512.png',
   },
   // 카메라·위치 등 네이티브 권한을 쓰지 않는 순수 웹앱이라 비워둬요.
   permissions: [],

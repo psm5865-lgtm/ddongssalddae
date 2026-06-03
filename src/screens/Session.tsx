@@ -5,6 +5,10 @@ import { CountdownRing } from '../components/CountdownRing';
 import { BreathingCircle } from '../components/BreathingCircle';
 import { TextEntry } from '../components/TextEntry';
 import { QuoteCard } from '../components/QuoteCard';
+import { BalanceCard } from '../components/BalanceCard';
+import { MoodCheck } from '../components/MoodCheck';
+import { TriviaCard } from '../components/TriviaCard';
+import { StretchGuide } from '../components/StretchGuide';
 import { useCountdown } from '../hooks/useCountdown';
 import { useSettings } from '../store/settings';
 import {
@@ -19,7 +23,7 @@ import styles from './Session.module.css';
 export function Session() {
   const navigate = useNavigate();
   const [settings] = useSettings();
-  const [, setRecords] = useRecords();
+  const [records, setRecords] = useRecords();
   const [lastType, setLastType] = useLastActivityType();
 
   const activityRef = useRef<Activity | null>(null);
@@ -33,6 +37,9 @@ export function Session() {
 
   const [note, setNote] = useState('');
   const [breathingDone, setBreathingDone] = useState(false);
+  const [stretchDone, setStretchDone] = useState(false);
+  const [choice, setChoice] = useState<'a' | 'b' | undefined>(undefined);
+  const [mood, setMood] = useState<number | undefined>(undefined);
 
   const vibratedRef = useRef(false);
   useEffect(() => {
@@ -44,6 +51,12 @@ export function Session() {
     }
   }, [isOver]);
 
+  // 기분 체크인용 최근 기록(오래된→최신)
+  const recentMoods = records
+    .filter((r) => typeof r.mood === 'number')
+    .slice(-7)
+    .map((r) => r.mood as number);
+
   const finish = () => {
     const trimmedNote = note.trim();
     const record: SessionRecord = {
@@ -52,6 +65,10 @@ export function Session() {
       activityType: activity.type,
       durationSec: elapsedSec,
       ...(trimmedNote ? { note: trimmedNote } : {}),
+      ...(mood != null ? { mood } : {}),
+      ...(activity.type === 'balance' && choice
+        ? { choice: choice === 'a' ? activity.pair.a : activity.pair.b }
+        : {}),
     };
     setRecords((prev) => [...prev, record]);
     setLastType(activity.type);
@@ -59,11 +76,43 @@ export function Session() {
   };
 
   const canFinish = useMemo(() => {
-    if (activity.type === 'breathing') return breathingDone || elapsedSec >= 30;
-    if (activity.type === 'gratitude' || activity.type === 'goals')
-      return note.trim().length > 0;
-    return true;
-  }, [activity.type, breathingDone, elapsedSec, note]);
+    switch (activity.type) {
+      case 'breathing':
+        return breathingDone || elapsedSec >= 30;
+      case 'stretch':
+        return stretchDone || elapsedSec >= 30;
+      case 'gratitude':
+      case 'goals':
+        return note.trim().length > 0;
+      case 'balance':
+        return choice != null;
+      case 'mood':
+        return mood != null;
+      case 'quotes':
+      case 'trivia':
+        return true;
+    }
+  }, [activity.type, breathingDone, stretchDone, elapsedSec, note, choice, mood]);
+
+  const buttonLabel = (() => {
+    switch (activity.type) {
+      case 'quotes':
+        return '마음에 새겼어요';
+      case 'trivia':
+        return '알았어요';
+      case 'breathing':
+        return breathingDone ? '끝내기' : '먼저 호흡에 집중해요';
+      case 'stretch':
+        return stretchDone ? '끝내기' : '스트레칭에 집중해요';
+      case 'balance':
+        return choice ? '골랐어요' : '둘 중 하나 골라요';
+      case 'mood':
+        return mood != null ? '기록할게요' : '기분을 골라요';
+      case 'gratitude':
+      case 'goals':
+        return '저장하고 끝내기';
+    }
+  })();
 
   return (
     <div className="screen">
@@ -92,6 +141,10 @@ export function Session() {
           <BreathingCircle onComplete={() => setBreathingDone(true)} />
         )}
 
+        {activity.type === 'stretch' && (
+          <StretchGuide onComplete={() => setStretchDone(true)} />
+        )}
+
         {activity.type === 'gratitude' && (
           <TextEntry
             prompt={activity.prompt}
@@ -114,6 +167,16 @@ export function Session() {
           <QuoteCard quote={activity.quote} value={note} onChange={setNote} />
         )}
 
+        {activity.type === 'balance' && (
+          <BalanceCard pair={activity.pair} value={choice} onChange={setChoice} />
+        )}
+
+        {activity.type === 'mood' && (
+          <MoodCheck value={mood} onChange={setMood} recent={recentMoods} />
+        )}
+
+        {activity.type === 'trivia' && <TriviaCard trivia={activity.trivia} />}
+
         {isOver && (
           <div className={styles.overBanner}>
             <span className={styles.overDot} />
@@ -124,13 +187,7 @@ export function Session() {
 
       <div className={styles.footer}>
         <PrimaryButton onClick={finish} disabled={!canFinish}>
-          {activity.type === 'quotes'
-            ? '마음에 새겼어요'
-            : activity.type === 'breathing'
-              ? breathingDone
-                ? '끝내기'
-                : '먼저 호흡에 집중해요'
-              : '저장하고 끝내기'}
+          {buttonLabel}
         </PrimaryButton>
       </div>
     </div>

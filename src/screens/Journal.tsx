@@ -13,6 +13,10 @@ const TAG: Record<ActivityType, string> = {
   goals: '다짐',
   quotes: '문장',
   breathing: '호흡',
+  balance: '선택',
+  mood: '기분',
+  trivia: '지식',
+  stretch: '스트레칭',
 };
 
 export function Journal() {

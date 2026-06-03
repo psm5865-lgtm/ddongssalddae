@@ -1,0 +1,30 @@
+.wrap {
+  padding: var(--space-8) var(--space-2) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-5);
+}
+
+.tag {
+  font: var(--font-small);
+  font-weight: 700;
+  color: var(--blue-600);
+  background: var(--blue-50);
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+}
+
+.text {
+  font: var(--font-h2);
+  font-size: 23px;
+  line-height: 1.6;
+  color: var(--gray-900);
+  letter-spacing: -0.01em;
+}
+
+.hint {
+  font: var(--font-caption);
+  color: var(--gray-500);
+}

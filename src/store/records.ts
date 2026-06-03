@@ -6,7 +6,9 @@ export type SessionRecord = {
   ts: number;   // session end timestamp
   activityType: ActivityType;
   durationSec: number;
-  note?: string;
+  note?: string;   // 감사·다짐·문장에서 적은 한 줄
+  mood?: number;   // 기분 체크인 점수(1~5)
+  choice?: string; // 밸런스게임에서 고른 쪽
 };
 
 const RECORDS_KEY = 'ddongssalddae:records';

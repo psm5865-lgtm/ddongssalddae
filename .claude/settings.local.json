@@ -49,7 +49,11 @@
       "Bash(curl -s \"https://ddongssalddae.vercel.app/\")",
       "Bash(curl -s -o /dev/null -w \"repo page: %{http_code}\\\\n\" \"https://github.com/psm5865-lgtm/ddongssalddae\")",
       "Bash(curl -sL -o /dev/null -w '%{http_code} %{content_type}' https://cdn.jsdelivr.net/gh/psm5865-lgtm/ddongssalddae@main/public/__TRACKED_VAR__)",
-      "Bash(gh auth *)"
+      "Bash(gh auth *)",
+      "Bash(curl -s -o /dev/null -w '%{http_code} %{content_type}' https://psm5865-lgtm.github.io/ddongssalddae/privacy.html)",
+      "Bash(curl -s https://psm5865-lgtm.github.io/ddongssalddae/privacy.html)",
+      "Bash(curl -s -o /dev/null -w \"root: %{http_code}\\\\n\" \"https://psm5865-lgtm.github.io/ddongssalddae/\")",
+      "Bash(git -c user.name=ddongssalddae -c user.email=noreply@example.com commit -q -m 'docs: STORE-LISTING에 새 .ait 업로드 + 개인정보 URL\\(GitHub Pages\\) 반영 *)"
     ]
   }
 }

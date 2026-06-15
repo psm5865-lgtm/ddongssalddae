@@ -29,6 +29,9 @@ export const ACTIVITY_TAG: Record<ActivityType, string> = {
   mood: '기분',
   trivia: '지식',
   stretch: '스트레칭',
+  fortune: '운세',
+  oxquiz: '퀴즈',
+  psychotest: '테스트',
 };
 
 /** 기록의 카드 항목들. 옛 flat 기록이면 상위 필드로 1개 합성. */

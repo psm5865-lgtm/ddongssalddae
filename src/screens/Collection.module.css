@@ -1,0 +1,145 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0 var(--space-4);
+}
+.back {
+  flex-shrink: 0;
+  font-size: 28px;
+  color: var(--gray-700);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -6px;
+  line-height: 1;
+}
+.topTitle {
+  font: var(--font-h2);
+  font-size: 18px;
+  color: var(--gray-900);
+  flex: 1;
+  text-align: center;
+}
+.spacer {
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) 0 var(--space-6);
+}
+.count {
+  font: var(--font-h2);
+  font-size: 22px;
+  color: var(--gray-900);
+  margin-top: var(--space-2);
+}
+.countTotal {
+  font-size: 15px;
+  color: var(--gray-500);
+  font-weight: 600;
+}
+.hint {
+  font: var(--font-small);
+  color: var(--gray-500);
+}
+
+.group {
+  margin-bottom: var(--space-6);
+}
+.groupTitle {
+  font: var(--font-body-bold);
+  color: var(--gray-700);
+  margin-bottom: var(--space-3);
+  padding-left: var(--space-1);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-4) var(--space-2);
+  border-radius: 18px;
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  box-shadow: var(--shadow-card);
+  transition: transform 120ms var(--ease);
+}
+.cell:not(:disabled):active {
+  transform: scale(0.95);
+}
+.cellEmoji {
+  font-size: 34px;
+  line-height: 1;
+}
+.cellName {
+  font: var(--font-small);
+  color: var(--gray-700);
+  font-weight: 600;
+  text-align: center;
+}
+
+.locked {
+  background: var(--gray-50);
+  border-style: dashed;
+}
+.locked .cellEmoji {
+  filter: grayscale(1);
+  opacity: 0.4;
+}
+.locked .cellName {
+  color: var(--gray-400);
+}
+
+.equipped {
+  border-color: var(--blue-500);
+  background: #f4f8ff;
+}
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font: var(--font-small);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--white);
+  background: var(--blue-500);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* 희귀도 좌상단 점 */
+.cell::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gray-300);
+}
+.rare::before {
+  background: var(--blue-500);
+}
+.legendary::before {
+  background: #f2b705;
+}
+
+.footer {
+  padding-top: var(--space-4);
+}

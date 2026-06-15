@@ -4,6 +4,9 @@ import { GRATITUDE_PROMPTS, GRATITUDE_PLACEHOLDER } from './gratitude';
 import { QUOTES } from './quotes';
 import { BALANCE_PAIRS, type BalancePair } from './balance';
 import { TRIVIA, type Trivia } from './trivia';
+import { FORTUNES, type Fortune } from './fortune';
+import { OX_QUIZZES, type OXQuiz } from './oxquiz';
+import { PSYCHO_TESTS, type PsychoTest } from './psychotest';
 
 export type ActivityType =
   | 'breathing'
@@ -13,7 +16,10 @@ export type ActivityType =
   | 'balance'
   | 'mood'
   | 'trivia'
-  | 'stretch';
+  | 'stretch'
+  | 'fortune'
+  | 'oxquiz'
+  | 'psychotest';
 
 export type Activity =
   | { type: 'breathing'; title: string; subtitle: string }
@@ -23,17 +29,23 @@ export type Activity =
   | { type: 'balance'; title: string; pair: BalancePair }
   | { type: 'mood'; title: string }
   | { type: 'trivia'; title: string; trivia: Trivia }
-  | { type: 'stretch'; title: string };
+  | { type: 'stretch'; title: string }
+  | { type: 'fortune'; title: string; fortune: Fortune }
+  | { type: 'oxquiz'; title: string; quiz: OXQuiz }
+  | { type: 'psychotest'; title: string; test: PsychoTest };
 
 const TITLES: Record<ActivityType, string> = {
-  breathing: '깊게 숨 한 번',
+  breathing: '크게 숨 한 번',
   gratitude: '오늘의 한 줄',
   goals: '작은 다짐 하나',
   quotes: '오늘의 문장',
-  balance: '오늘의 선택',
+  balance: '오늘의 밸런스',
   mood: '기분 체크인',
   trivia: '오늘의 한 입',
-  stretch: '몸 펴기',
+  stretch: '몸 좀 풀기',
+  fortune: '오늘의 똥 운세',
+  oxquiz: 'OX 퀴즈',
+  psychotest: '한 컷 심리테스트',
 };
 
 function pick<T>(arr: T[]): T {
@@ -69,6 +81,16 @@ function buildActivity(type: ActivityType): Activity {
       return { type: 'trivia', title: TITLES.trivia, trivia: pick(TRIVIA) };
     case 'stretch':
       return { type: 'stretch', title: TITLES.stretch };
+    case 'fortune':
+      return { type: 'fortune', title: TITLES.fortune, fortune: pick(FORTUNES) };
+    case 'oxquiz':
+      return { type: 'oxquiz', title: TITLES.oxquiz, quiz: pick(OX_QUIZZES) };
+    case 'psychotest':
+      return {
+        type: 'psychotest',
+        title: TITLES.psychotest,
+        test: pick(PSYCHO_TESTS),
+      };
   }
 }
 
@@ -81,6 +103,9 @@ const ALL_TYPES: ActivityType[] = [
   'mood',
   'trivia',
   'stretch',
+  'fortune',
+  'oxquiz',
+  'psychotest',
 ];
 
 export function pickRandomActivity(prevType?: ActivityType | null): Activity {
@@ -91,22 +116,23 @@ export function pickRandomActivity(prevType?: ActivityType | null): Activity {
 }
 
 // ─── 덱(여러 카드) 엔진 ─────────────────────────────────────────────
-type Bucket = 'calm' | 'tap' | 'read' | 'write';
+type Bucket = 'calm' | 'tap' | 'read' | 'play' | 'write';
 
 const BUCKETS: Record<Bucket, ActivityType[]> = {
   calm: ['breathing', 'stretch'], // 가이드형, 시간 채움, 차분히 연다
   tap: ['balance', 'mood'], // 원탭 가벼운 상호작용
-  read: ['trivia', 'quotes'], // 읽기(호기심/음미)
+  read: ['trivia', 'quotes', 'fortune'], // 읽기(호기심/음미/운세)
+  play: ['oxquiz', 'psychotest'], // 가벼운 놀이(퀴즈/테스트)
   write: ['gratitude', 'goals'], // 선택형 쓰기(덱당 최대 1장)
 };
 
 const SIZE_BY_LIMIT: Record<3 | 5 | 7, number> = { 3: 5, 5: 7, 7: 9 };
 
 const TEMPLATE_BY_SIZE: Record<number, Bucket[]> = {
-  // 차분(호흡·스트레칭) 2장이 '시간의 척추', 그 사이를 읽기·탭·쓰기로 변주.
-  5: ['calm', 'tap', 'read', 'write', 'calm'],
-  7: ['calm', 'read', 'tap', 'write', 'tap', 'read', 'calm'],
-  9: ['calm', 'read', 'tap', 'read', 'tap', 'write', 'read', 'tap', 'calm'],
+  // 차분(호흡·스트레칭) 2장이 '시간의 척추', 그 사이를 놀이·읽기·탭·쓰기로 변주.
+  5: ['calm', 'play', 'read', 'tap', 'calm'],
+  7: ['calm', 'play', 'read', 'tap', 'write', 'read', 'calm'],
+  9: ['calm', 'read', 'play', 'tap', 'write', 'read', 'play', 'tap', 'calm'],
 };
 
 // 한 세션 = 짧은 카드 여러 장. 호흡으로 열고 → 탭/읽기 변주 → 쓰기로 닫기.

@@ -1,0 +1,110 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0 var(--space-4);
+}
+.back {
+  flex-shrink: 0;
+  font-size: 28px;
+  color: var(--gray-700);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -6px;
+  line-height: 1;
+}
+.topTitle {
+  font: var(--font-h2);
+  font-size: 18px;
+  color: var(--gray-900);
+  flex: 1;
+  text-align: center;
+}
+.spacer {
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.titleCard {
+  background: linear-gradient(135deg, #3b8dfb 0%, #2e73e6 100%);
+  border-radius: 22px;
+  padding: var(--space-6);
+  color: var(--white);
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(49, 130, 246, 0.28);
+}
+.titleLabel {
+  font: var(--font-caption);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+.titleBig {
+  font: var(--font-h1);
+  font-size: 30px;
+  font-weight: 800;
+  margin-top: var(--space-2);
+  letter-spacing: -0.01em;
+}
+.titleSub {
+  font: var(--font-caption);
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: var(--space-2);
+}
+
+.lead {
+  text-align: center;
+  font: var(--font-body);
+  color: var(--gray-700);
+  margin: var(--space-6) 0 var(--space-4);
+}
+.leadStrong {
+  color: var(--blue-600);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+.stat {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+.statValue {
+  font: var(--font-h1);
+  font-size: 28px;
+  color: var(--gray-900);
+  font-variant-numeric: tabular-nums;
+}
+.statValueSm {
+  font: var(--font-h2);
+  font-size: 20px;
+  color: var(--gray-900);
+}
+.statLabel {
+  font: var(--font-small);
+  color: var(--gray-500);
+  text-align: center;
+}
+
+.mascotRow {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) 0 var(--space-4);
+}
+
+.footer {
+  padding-top: var(--space-4);
+}

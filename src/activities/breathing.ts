@@ -10,6 +10,6 @@ export const BREATHING_CYCLE: BreathingPhase[] = [
   { label: '내쉬기', seconds: 6, scale: 1.0 },
 ];
 
-export const BREATHING_CYCLES = 6;
+export const BREATHING_CYCLES = 3;
 
 export const BREATHING_INTRO = '4초 들이쉬고, 2초 멈추고, 6초 길게 내쉬어요.';

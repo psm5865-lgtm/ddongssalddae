@@ -1,0 +1,91 @@
+.stage {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6em;
+  height: 1.6em;
+  padding: 0;
+  border: none;
+  background: transparent;
+  line-height: 1;
+}
+.stage:not(:disabled) {
+  cursor: pointer;
+}
+.stage:not(:disabled):active {
+  transform: scale(0.96);
+}
+
+.aura {
+  position: absolute;
+  inset: -6%;
+  border-radius: 50%;
+  z-index: 0;
+  filter: blur(1px);
+  opacity: 0.7;
+}
+
+.core {
+  position: relative;
+  z-index: 1;
+  font-size: 1em;
+  animation: bob 2.6s ease-in-out infinite;
+}
+
+.hat {
+  position: absolute;
+  z-index: 2;
+  top: -0.18em;
+  left: 50%;
+  transform: translateX(-50%) rotate(-7deg);
+  font-size: 0.52em;
+  animation: bob 2.6s ease-in-out infinite;
+}
+
+.acc {
+  position: absolute;
+  z-index: 2;
+  right: 0.04em;
+  bottom: 0.12em;
+  font-size: 0.44em;
+}
+
+/* 컨디션별 분위기 */
+.happy .core {
+  animation-duration: 1.9s;
+}
+.lonely .core {
+  animation-duration: 4.2s;
+  filter: grayscale(0.35);
+  opacity: 0.82;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7%);
+  }
+}
+.hat {
+  animation-name: bobHat;
+}
+@keyframes bobHat {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0) rotate(-7deg);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-7%) rotate(-7deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .core,
+  .hat {
+    animation: none;
+  }
+}

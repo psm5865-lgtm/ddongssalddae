@@ -9,6 +9,9 @@ import { BalanceCard } from '../components/BalanceCard';
 import { MoodCheck } from '../components/MoodCheck';
 import { TriviaCard } from '../components/TriviaCard';
 import { StretchGuide } from '../components/StretchGuide';
+import { FortuneCard } from '../components/FortuneCard';
+import { OXQuizCard } from '../components/OXQuizCard';
+import { PsychoTestCard } from '../components/PsychoTestCard';
 import { useCountdown } from '../hooks/useCountdown';
 import { useSettings } from '../store/settings';
 import {
@@ -24,13 +27,18 @@ import styles from './Session.module.css';
 
 // 카드별 최소 머무는 시간(ms). 차분 카드는 가이드가 끝날 때까지를 백스톱으로,
 // 읽기 카드는 잠깐 음미할 시간을. 탭/쓰기는 0(선택·완료가 게이트).
+// 차분 카드의 dwell = '건너뛰기 활성' 시점(절반쯤). 그 전엔 집중, 그 후엔 스킵 가능.
+// onComplete가 오면 그냥 '다음'. 읽기 카드는 잠깐 음미 시간. 탭/놀이/쓰기는 0(선택·완료가 게이트).
 const DWELL_MS: Record<ActivityType, number> = {
-  breathing: 76000, // 6사이클(72s) + 여유 — 보통은 onComplete가 먼저 연다
-  stretch: 108000, // 8동작(104s) + 여유
+  breathing: 18000, // 3사이클 ≈36s → 절반 지나면 건너뛰기
+  stretch: 25000, // 4동작 ≈51s → 절반 지나면 건너뛰기
   trivia: 8000,
   quotes: 8000,
+  fortune: 6000,
   balance: 0,
   mood: 0,
+  oxquiz: 0,
+  psychotest: 0,
   gratitude: 0,
   goals: 0,
 };
@@ -65,6 +73,7 @@ export function Session() {
   const [stretchDone, setStretchDone] = useState(false);
   const [choice, setChoice] = useState<'a' | 'b' | undefined>(undefined);
   const [mood, setMood] = useState<number | undefined>(undefined);
+  const [answered, setAnswered] = useState(false); // 퀴즈·심리테스트 응답 여부
   const [dwellReady, setDwellReady] = useState(false);
 
   useEffect(() => {
@@ -73,6 +82,7 @@ export function Session() {
     setStretchDone(false);
     setChoice(undefined);
     setMood(undefined);
+    setAnswered(false);
 
     // 카드별 최소 머무름 — setTimeout 기반이라 탭이 가려져도 안정적으로 동작
     setDwellReady(false);
@@ -142,9 +152,9 @@ export function Session() {
   const canAdvance = useMemo(() => {
     switch (current.type) {
       case 'breathing':
-        return breathingDone || dwellReady; // 호흡을 끝까지 마쳐야 (백스톱: dwell)
+        return breathingDone || dwellReady; // 완주하거나, 절반 지나면 건너뛰기 가능
       case 'stretch':
-        return stretchDone || dwellReady; // 스트레칭을 끝까지 마쳐야
+        return stretchDone || dwellReady;
       case 'gratitude':
       case 'goals':
         return true; // 쓰기는 선택 — 안 써도 다음
@@ -152,11 +162,20 @@ export function Session() {
         return choice != null;
       case 'mood':
         return mood != null;
+      case 'oxquiz':
+      case 'psychotest':
+        return answered;
       case 'quotes':
       case 'trivia':
+      case 'fortune':
         return dwellReady; // 잠깐 읽을 시간을 둔다
     }
-  }, [current.type, breathingDone, stretchDone, dwellReady, choice, mood]);
+  }, [current.type, breathingDone, stretchDone, dwellReady, choice, mood, answered]);
+
+  // 차분 카드를 다 안 끝냈는데 넘길 수 있는 상태 = '건너뛰기'
+  const isCalmSkip =
+    (current.type === 'breathing' && !breathingDone && dwellReady) ||
+    (current.type === 'stretch' && !stretchDone && dwellReady);
 
   const buttonLabel = (() => {
     if (!canAdvance) {
@@ -169,13 +188,18 @@ export function Session() {
           return '둘 중 하나 골라요';
         case 'mood':
           return '기분을 골라요';
+        case 'oxquiz':
+        case 'psychotest':
+          return '골라보세요';
         case 'quotes':
         case 'trivia':
+        case 'fortune':
           return '잠깐 읽어볼까요';
         default:
           return '다음';
       }
     }
+    if (isCalmSkip) return isLast ? '마치기' : '건너뛰기 ›';
     return isLast ? '마치기' : '다음';
   })();
 
@@ -246,6 +270,18 @@ export function Session() {
             <MoodCheck value={mood} onChange={setMood} recent={recentMoods} />
           )}
           {current.type === 'trivia' && <TriviaCard trivia={current.trivia} />}
+          {current.type === 'fortune' && (
+            <FortuneCard fortune={current.fortune} />
+          )}
+          {current.type === 'oxquiz' && (
+            <OXQuizCard quiz={current.quiz} onAnswered={() => setAnswered(true)} />
+          )}
+          {current.type === 'psychotest' && (
+            <PsychoTestCard
+              test={current.test}
+              onPicked={() => setAnswered(true)}
+            />
+          )}
         </div>
 
         {isOver && (

@@ -4,9 +4,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--space-6);
-  padding: var(--space-12) 0;
+  gap: var(--space-5);
+  padding: var(--space-8) 0;
   text-align: center;
+}
+
+.evolve {
+  font: var(--font-body-bold);
+  color: #9a6b00;
+  background: linear-gradient(160deg, #fff7e0, #ffefb8);
+  border: 1px solid #ffe6a0;
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-5);
+}
+
+.recap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
 }
 
 .stampWrap {
@@ -126,4 +142,7 @@
 
 .footer {
   padding-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }

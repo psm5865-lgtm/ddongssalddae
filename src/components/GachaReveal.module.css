@@ -1,0 +1,98 @@
+.wrap {
+  width: 100%;
+  border-radius: var(--radius-card);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1.5px solid var(--gray-100);
+  background: var(--gray-50);
+}
+
+.label {
+  font: var(--font-small);
+  font-weight: 800;
+  color: var(--gray-600);
+}
+
+.tile {
+  width: 110px;
+  height: 110px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--space-1) 0;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+}
+
+.emoji {
+  font-size: 60px;
+  line-height: 1;
+}
+
+.meta {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.rarity {
+  font: var(--font-small);
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.cat {
+  font: var(--font-small);
+  color: var(--gray-500);
+  font-weight: 600;
+}
+
+.name {
+  font: var(--font-h2);
+  font-size: 22px;
+  color: var(--gray-900);
+  letter-spacing: -0.01em;
+}
+
+/* 희귀도 테마 */
+.common {
+  background: var(--gray-50);
+}
+.common .tile {
+  background: linear-gradient(160deg, #eef1f4, #dfe4ea);
+}
+.common .rarity {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+.rare {
+  background: #eef5ff;
+  border-color: #cfe2ff;
+}
+.rare .tile {
+  background: linear-gradient(160deg, #d7e9ff, #a9ccff);
+}
+.rare .rarity {
+  background: #d7e9ff;
+  color: var(--blue-600);
+}
+
+.legendary {
+  background: linear-gradient(160deg, #fff7e0, #fff);
+  border-color: #ffe6a0;
+}
+.legendary .tile {
+  background: linear-gradient(160deg, #ffe9a8, #ffcf5c);
+}
+.legendary .rarity {
+  background: #ffe9a8;
+  color: #9a6b00;
+}
+.legendary .name {
+  color: #9a6b00;
+}

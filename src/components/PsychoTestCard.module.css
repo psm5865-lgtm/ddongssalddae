@@ -1,0 +1,68 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-4);
+}
+
+.label {
+  font: var(--font-small);
+  font-weight: 700;
+  color: var(--blue-500);
+}
+
+.q {
+  font: var(--font-h2);
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--gray-900);
+  letter-spacing: -0.01em;
+  max-width: 18em;
+}
+
+.opts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+.opt {
+  width: 100%;
+  padding: var(--space-4);
+  border-radius: 18px;
+  border: 2px solid var(--gray-200);
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+  font: var(--font-body-bold);
+  color: var(--gray-800);
+  transition: transform 120ms var(--ease);
+}
+.opt:active {
+  transform: scale(0.97);
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: #f4f8ff;
+  border-radius: var(--radius-card);
+  padding: var(--space-5);
+  width: 100%;
+}
+.pickedLabel {
+  font: var(--font-caption);
+  color: var(--blue-600);
+  font-weight: 700;
+}
+.resultText {
+  font: var(--font-h2);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--gray-900);
+  letter-spacing: -0.01em;
+}
